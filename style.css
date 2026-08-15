@@ -405,3 +405,49 @@ pre {
     transform: translateY(0);
   }
 }
+/* Test Ad Styles */
+.test-ad-banner {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+}
+
+.ad-badge {
+  position: absolute;
+  top: -10px;
+  right: 15px;
+  background: #94a3b8;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.ad-content h4 {
+  font-size: 1.1rem;
+  color: #0f172a;
+  margin-bottom: 0.3rem;
+}
+
+.ad-content p {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.ad-btn {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 0.4rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
