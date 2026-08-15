@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "Create a Voting App using Python",
+    "description": "Write a command-line Python program that tracks votes for candidates and determines the winner based on user input.",
+    "difficulty": "Beginner",
+    "category": "App Development",
+    "solution": "votes = {'Alice': 0, 'Bob': 0}\n\nwhile True:\n    vote = input('Vote for Alice/Bob (or \"done\"): ').capitalize()\n    if vote == 'Done':\n        break\n    if vote in votes:\n        votes[vote] += 1\n    else:\n        print('Invalid choice!')\n\nwinner = max(votes, key=votes.get)\nprint(f'Winner: {winner} with {votes[winner]} votes!')"
+  },
+  {
+    "id": 2,
+    "title": "Build a Simple Password Generator",
+    "description": "Generate a random, secure password of user-defined length containing letters, digits, and special characters.",
+    "difficulty": "Beginner",
+    "category": "Security & Utilities",
+    "solution": "import random\nimport string\n\ndef generate_password(length=12):\n    chars = string.ascii_letters + string.digits + string.punctuation\n    return ''.join(random.choice(chars) for _ in range(length))\n\nprint('Generated Password:', generate_password(16))"
+  }
+]
