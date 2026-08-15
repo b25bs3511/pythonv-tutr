@@ -1,6 +1,13 @@
 let problems = [];
 let currentIndex = 0;
 
+// Intro Elements
+const introScreen = document.getElementById("intro-screen");
+const step1 = document.getElementById("step-1");
+const step2 = document.getElementById("step-2");
+const step3 = document.getElementById("step-3");
+
+// App Elements
 const titleEl = document.getElementById("problem-title");
 const descEl = document.getElementById("problem-desc");
 const badgeEl = document.getElementById("problem-difficulty");
@@ -13,7 +20,28 @@ const btnDone = document.getElementById("btn-done");
 const btnNext = document.getElementById("btn-next");
 const btnCopy = document.getElementById("btn-copy");
 
-// Fetch problems list
+// Cinematic Intro Sequence Timing
+function playIntro() {
+  setTimeout(() => {
+    step1.classList.add("active");
+  }, 300);
+
+  setTimeout(() => {
+    step1.classList.remove("active");
+    step2.classList.add("active");
+  }, 1600);
+
+  setTimeout(() => {
+    step2.classList.remove("active");
+    step3.classList.add("active");
+  }, 3200);
+
+  setTimeout(() => {
+    introScreen.classList.add("hide");
+  }, 5000);
+}
+
+// Fetch & Load Problems
 async function loadProblems() {
   try {
     const res = await fetch("problems.json");
@@ -21,14 +49,15 @@ async function loadProblems() {
     displayProblem(currentIndex);
   } catch (err) {
     titleEl.textContent = "Problems load nahi ho paaye.";
-    console.error(err);
+    console.error("Error loading problems.json:", err);
   }
 }
 
 function displayProblem(index) {
+  if (!problems.length) return;
   const item = problems[index];
   
-  // Reset solution visibility
+  // Collapse solution view smoothly
   solutionBox.classList.remove("show");
 
   titleEl.textContent = item.title;
@@ -41,22 +70,18 @@ function displayProblem(index) {
   Prism.highlightElement(codeEl);
 }
 
-// Done / Show Solution Event
+// Toggle Solution
 btnDone.addEventListener("click", () => {
   solutionBox.classList.toggle("show");
 });
 
-// Next Problem Event
+// Navigate Next
 btnNext.addEventListener("click", () => {
-  if (currentIndex < problems.length - 1) {
-    currentIndex++;
-  } else {
-    currentIndex = 0; // Loop back to start
-  }
+  currentIndex = (currentIndex + 1) % problems.length;
   displayProblem(currentIndex);
 });
 
-// Copy Code Button
+// Copy Snippet
 btnCopy.addEventListener("click", () => {
   navigator.clipboard.writeText(codeEl.textContent);
   btnCopy.textContent = "Copied! ✅";
@@ -65,4 +90,8 @@ btnCopy.addEventListener("click", () => {
   }, 1500);
 });
 
-loadProblems();
+// Init
+window.addEventListener("DOMContentLoaded", () => {
+  playIntro();
+  loadProblems();
+});
