@@ -1,3 +1,489 @@
+import json
+
+problems = []
+
+# 1-10: Basic Input/Output & Variables
+for i in range(1, 11):
+    if i == 1:
+        problems.append({
+            "id": i,
+            "title": "Print Hello World",
+            "problem": "Write a program to print 'Hello, World!' on the screen.",
+            "solution": "print('Hello, World!')"
+        })
+    elif i == 2:
+        problems.append({
+            "id": i,
+            "title": "Add Two Numbers",
+            "problem": "Take two numbers from user and print their sum.",
+            "solution": "a = int(input('Enter first number: '))\nb = int(input('Enter second number: '))\nprint('Sum:', a + b)"
+        })
+    elif i == 3:
+        problems.append({
+            "id": i,
+            "title": "Find Square of a Number",
+            "problem": "Take a number from user and print its square.",
+            "solution": "n = int(input('Enter a number: '))\nprint('Square:', n ** 2)"
+        })
+    elif i == 4:
+        problems.append({
+            "id": i,
+            "title": "Swap Two Variables",
+            "problem": "Swap two numbers without using third variable.",
+            "solution": "a = 5\nb = 10\na, b = b, a\nprint('a =', a, 'b =', b)"
+        })
+    elif i == 5:
+        problems.append({
+            "id": i,
+            "title": "Check Even or Odd",
+            "problem": "Take a number and check if it's even or odd.",
+            "solution": "n = int(input('Enter number: '))\nif n % 2 == 0:\n    print('Even')\nelse:\n    print('Odd')"
+        })
+    elif i == 6:
+        problems.append({
+            "id": i,
+            "title": "Find Largest of Two Numbers",
+            "problem": "Take two numbers and print the larger one.",
+            "solution": "a = int(input())\nb = int(input())\nif a > b:\n    print(a)\nelse:\n    print(b)"
+        })
+    elif i == 7:
+        problems.append({
+            "id": i,
+            "title": "Check Positive/Negative",
+            "problem": "Check if a number is positive, negative, or zero.",
+            "solution": "n = int(input())\nif n > 0:\n    print('Positive')\nelif n < 0:\n    print('Negative')\nelse:\n    print('Zero')"
+        })
+    elif i == 8:
+        problems.append({
+            "id": i,
+            "title": "Simple Interest Calculator",
+            "problem": "Calculate simple interest (SI = P*R*T/100).",
+            "solution": "P = float(input('Principal: '))\nR = float(input('Rate: '))\nT = float(input('Time: '))\nSI = (P*R*T)/100\nprint('SI:', SI)"
+        })
+    elif i == 9:
+        problems.append({
+            "id": i,
+            "title": "Area of Circle",
+            "problem": "Calculate area of circle given radius.",
+            "solution": "r = float(input('Radius: '))\narea = 3.14159 * r * r\nprint('Area:', area)"
+        })
+    elif i == 10:
+        problems.append({
+            "id": i,
+            "title": "Convert Celsius to Fahrenheit",
+            "problem": "Convert temperature from Celsius to Fahrenheit.",
+            "solution": "c = float(input('Celsius: '))\nf = (c * 9/5) + 32\nprint('Fahrenheit:', f)"
+        })
+
+# 11-30: Conditional Statements & Loops
+for i in range(11, 31):
+    if i == 11:
+        problems.append({
+            "id": i,
+            "title": "Print 1 to 10",
+            "problem": "Print numbers from 1 to 10 using for loop.",
+            "solution": "for i in range(1, 11):\n    print(i)"
+        })
+    elif i == 12:
+        problems.append({
+            "id": i,
+            "title": "Sum of First N Numbers",
+            "problem": "Calculate sum of first N natural numbers.",
+            "solution": "n = int(input())\nsum = 0\nfor i in range(1, n+1):\n    sum += i\nprint('Sum:', sum)"
+        })
+    elif i == 13:
+        problems.append({
+            "id": i,
+            "title": "Multiplication Table",
+            "problem": "Print multiplication table of a given number.",
+            "solution": "n = int(input())\nfor i in range(1, 11):\n    print(n, 'x', i, '=', n*i)"
+        })
+    elif i == 14:
+        problems.append({
+            "id": i,
+            "title": "Factorial of a Number",
+            "problem": "Find factorial of a number using loop.",
+            "solution": "n = int(input())\nfact = 1\nfor i in range(1, n+1):\n    fact *= i\nprint('Factorial:', fact)"
+        })
+    elif i == 15:
+        problems.append({
+            "id": i,
+            "title": "Count Digits of a Number",
+            "problem": "Count how many digits are in a number.",
+            "solution": "n = int(input())\ncount = 0\nwhile n > 0:\n    count += 1\n    n //= 10\nprint('Digits:', count)"
+        })
+    elif i == 16:
+        problems.append({
+            "id": i,
+            "title": "Reverse a Number",
+            "problem": "Reverse the digits of a number.",
+            "solution": "n = int(input())\nrev = 0\nwhile n > 0:\n    rev = rev * 10 + n % 10\n    n //= 10\nprint('Reversed:', rev)"
+        })
+    elif i == 17:
+        problems.append({
+            "id": i,
+            "title": "Check Palindrome Number",
+            "problem": "Check if a number is palindrome or not.",
+            "solution": "n = int(input())\ntemp = n\nrev = 0\nwhile temp > 0:\n    rev = rev * 10 + temp % 10\n    temp //= 10\nif n == rev:\n    print('Palindrome')\nelse:\n    print('Not Palindrome')"
+        })
+    elif i == 18:
+        problems.append({
+            "id": i,
+            "title": "Fibonacci Series",
+            "problem": "Print first N terms of Fibonacci series.",
+            "solution": "n = int(input())\na, b = 0, 1\nfor i in range(n):\n    print(a, end=' ')\n    a, b = b, a+b"
+        })
+    elif i == 19:
+        problems.append({
+            "id": i,
+            "title": "Check Prime Number",
+            "problem": "Check if a given number is prime.",
+            "solution": "n = int(input())\nis_prime = True\nif n < 2:\n    is_prime = False\nelse:\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            is_prime = False\n            break\nprint('Prime' if is_prime else 'Not Prime')"
+        })
+    elif i == 20:
+        problems.append({
+            "id": i,
+            "title": "Print Even Numbers",
+            "problem": "Print all even numbers from 1 to 50.",
+            "solution": "for i in range(2, 51, 2):\n    print(i)"
+        })
+    # 21-30: More loops
+    elif i == 21:
+        problems.append({
+            "id": i,
+            "title": "Sum of Digits",
+            "problem": "Calculate sum of digits of a number.",
+            "solution": "n = int(input())\nsum_digits = 0\nwhile n > 0:\n    sum_digits += n % 10\n    n //= 10\nprint('Sum of digits:', sum_digits)"
+        })
+    elif i == 22:
+        problems.append({
+            "id": i,
+            "title": "Armstrong Number",
+            "problem": "Check if a number is Armstrong (narcissistic).",
+            "solution": "n = int(input())\ntemp = n\nsum_cubes = 0\nwhile temp > 0:\n    digit = temp % 10\n    sum_cubes += digit ** 3\n    temp //= 10\nprint('Armstrong' if n == sum_cubes else 'Not Armstrong')"
+        })
+    elif i == 23:
+        problems.append({
+            "id": i,
+            "title": "LCM of Two Numbers",
+            "problem": "Find LCM of two numbers.",
+            "solution": "a = int(input())\nb = int(input())\ngcd = 0\nfor i in range(1, min(a,b)+1):\n    if a%i==0 and b%i==0:\n        gcd = i\nlcm = (a*b)//gcd\nprint('LCM:', lcm)"
+        })
+    elif i == 24:
+        problems.append({
+            "id": i,
+            "title": "GCD/HCF of Two Numbers",
+            "problem": "Find GCD of two numbers.",
+            "solution": "a = int(input())\nb = int(input())\nwhile b:\n    a, b = b, a%b\nprint('GCD:', a)"
+        })
+    elif i == 25:
+        problems.append({
+            "id": i,
+            "title": "Pattern Print - Triangle",
+            "problem": "Print a right triangle pattern of stars.",
+            "solution": "n = int(input())\nfor i in range(1, n+1):\n    print('*' * i)"
+        })
+    elif i == 26:
+        problems.append({
+            "id": i,
+            "title": "Pattern Print - Inverted Triangle",
+            "problem": "Print inverted right triangle pattern.",
+            "solution": "n = int(input())\nfor i in range(n, 0, -1):\n    print('*' * i)"
+        })
+    elif i == 27:
+        problems.append({
+            "id": i,
+            "title": "Print 1 to 100 Using While",
+            "problem": "Print 1 to 100 using while loop.",
+            "solution": "i = 1\nwhile i <= 100:\n    print(i)\n    i += 1"
+        })
+    elif i == 28:
+        problems.append({
+            "id": i,
+            "title": "Sum of Squares",
+            "problem": "Calculate sum of squares of first N numbers.",
+            "solution": "n = int(input())\nsum_sq = sum(i**2 for i in range(1, n+1))\nprint('Sum of squares:', sum_sq)"
+        })
+    elif i == 29:
+        problems.append({
+            "id": i,
+            "title": "Leap Year Checker",
+            "problem": "Check if a year is leap year or not.",
+            "solution": "year = int(input())\nif (year%400==0) or (year%4==0 and year%100!=0):\n    print('Leap Year')\nelse:\n    print('Not a Leap Year')"
+        })
+    elif i == 30:
+        problems.append({
+            "id": i,
+            "title": "Count Vowels in String",
+            "problem": "Count number of vowels in a given string.",
+            "solution": "s = input()\nvowels = 'aeiouAEIOU'\ncount = sum(1 for ch in s if ch in vowels)\nprint('Vowels:', count)"
+        })
+
+# 31-50: Lists & Strings
+for i in range(31, 51):
+    if i == 31:
+        problems.append({
+            "id": i,
+            "title": "Sum of List Elements",
+            "problem": "Find sum of all elements in a list.",
+            "solution": "lst = [10, 20, 30, 40, 50]\nprint('Sum:', sum(lst))"
+        })
+    elif i == 32:
+        problems.append({
+            "id": i,
+            "title": "Largest in List",
+            "problem": "Find largest element in a list.",
+            "solution": "lst = [5, 2, 8, 1, 9]\nprint('Largest:', max(lst))"
+        })
+    elif i == 33:
+        problems.append({
+            "id": i,
+            "title": "Reverse a List",
+            "problem": "Reverse a list without using reverse() method.",
+            "solution": "lst = [1,2,3,4,5]\nrev = lst[::-1]\nprint('Reversed:', rev)"
+        })
+    elif i == 34:
+        problems.append({
+            "id": i,
+            "title": "Remove Duplicates from List",
+            "problem": "Remove duplicate elements from a list.",
+            "solution": "lst = [1,2,2,3,4,4,5]\nunique = list(set(lst))\nprint('Unique:', unique)"
+        })
+    elif i == 35:
+        problems.append({
+            "id": i,
+            "title": "Palindrome String",
+            "problem": "Check if a string is palindrome.",
+            "solution": "s = input()\nif s == s[::-1]:\n    print('Palindrome')\nelse:\n    print('Not Palindrome')"
+        })
+    elif i == 36:
+        problems.append({
+            "id": i,
+            "title": "Count Occurrences in String",
+            "problem": "Count how many times a character appears in a string.",
+            "solution": "s = input()\nchar = input()\nprint('Count:', s.count(char))"
+        })
+    elif i == 37:
+        problems.append({
+            "id": i,
+            "title": "Find Index of Element",
+            "problem": "Find index of a given element in list.",
+            "solution": "lst = [10,20,30,40,50]\nelement = 30\nprint('Index:', lst.index(element))"
+        })
+    elif i == 38:
+        problems.append({
+            "id": i,
+            "title": "List Comprehension - Squares",
+            "problem": "Create a list of squares of numbers 1 to 10.",
+            "solution": "squares = [i**2 for i in range(1, 11)]\nprint(squares)"
+        })
+    elif i == 39:
+        problems.append({
+            "id": i,
+            "title": "Even Numbers from List",
+            "problem": "Extract even numbers from a list.",
+            "solution": "lst = [1,2,3,4,5,6,7,8,9,10]\nevens = [x for x in lst if x%2==0]\nprint('Evens:', evens)"
+        })
+    elif i == 40:
+        problems.append({
+            "id": i,
+            "title": "Concatenate Two Lists",
+            "problem": "Merge two lists into one.",
+            "solution": "list1 = [1,2,3]\nlist2 = [4,5,6]\nmerged = list1 + list2\nprint(merged)"
+        })
+    elif i == 41:
+        problems.append({
+            "id": i,
+            "title": "String Length",
+            "problem": "Find length of a string without using len().",
+            "solution": "s = input()\ncount = 0\nfor ch in s:\n    count += 1\nprint('Length:', count)"
+        })
+    elif i == 42:
+        problems.append({
+            "id": i,
+            "title": "Uppercase/Lowercase Conversion",
+            "problem": "Convert string to uppercase and lowercase.",
+            "solution": "s = input()\nprint('Uppercase:', s.upper())\nprint('Lowercase:', s.lower())"
+        })
+    elif i == 43:
+        problems.append({
+            "id": i,
+            "title": "Check Substring",
+            "problem": "Check if a substring exists in a string.",
+            "solution": "s = input()\nsub = input()\nif sub in s:\n    print('Found')\nelse:\n    print('Not found')"
+        })
+    elif i == 44:
+        problems.append({
+            "id": i,
+            "title": "Replace Character in String",
+            "problem": "Replace all occurrences of a character.",
+            "solution": "s = input()\nold = input()\nnew = input()\nprint(s.replace(old, new))"
+        })
+    elif i == 45:
+        problems.append({
+            "id": i,
+            "title": "Split String into Words",
+            "problem": "Split a sentence into words.",
+            "solution": "s = input()\nwords = s.split()\nprint(words)"
+        })
+    elif i == 46:
+        problems.append({
+            "id": i,
+            "title": "Join List into String",
+            "problem": "Join list elements into a single string.",
+            "solution": "words = ['Hello', 'World', 'Python']\nresult = ' '.join(words)\nprint(result)"
+        })
+    elif i == 47:
+        problems.append({
+            "id": i,
+            "title": "Find Smallest in List",
+            "problem": "Find smallest element in a list.",
+            "solution": "lst = [5,2,8,1,9]\nprint('Smallest:', min(lst))"
+        })
+    elif i == 48:
+        problems.append({
+            "id": i,
+            "title": "Sort List",
+            "problem": "Sort a list in ascending order.",
+            "solution": "lst = [5,2,8,1,9]\nlst.sort()\nprint('Sorted:', lst)"
+        })
+    elif i == 49:
+        problems.append({
+            "id": i,
+            "title": "List Length",
+            "problem": "Find length of a list without using len().",
+            "solution": "lst = [1,2,3,4,5]\ncount = 0\nfor item in lst:\n    count += 1\nprint('Length:', count)"
+        })
+    elif i == 50:
+        problems.append({
+            "id": i,
+            "title": "Insert Element in List",
+            "problem": "Insert an element at a specific position.",
+            "solution": "lst = [1,2,3,4,5]\nlst.insert(2, 99)\nprint(lst)"
+        })
+
+# 51-70: Functions & Dictionaries
+for i in range(51, 71):
+    if i == 51:
+        problems.append({
+            "id": i,
+            "title": "Simple Function",
+            "problem": "Define a function that prints 'Hello'.",
+            "solution": "def greet():\n    print('Hello')\ngreet()"
+        })
+    elif i == 52:
+        problems.append({
+            "id": i,
+            "title": "Function with Parameter",
+            "problem": "Create a function that takes name and prints greeting.",
+            "solution": "def greet(name):\n    print('Hello', name)\ngreet('Rahul')"
+        })
+    elif i == 53:
+        problems.append({
+            "id": i,
+            "title": "Function with Return Value",
+            "problem": "Create function that returns sum of two numbers.",
+            "solution": "def add(a, b):\n    return a + b\nprint(add(5, 7))"
+        })
+    elif i == 54:
+        problems.append({
+            "id": i,
+            "title": "Default Arguments",
+            "problem": "Function with default parameter value.",
+            "solution": "def greet(name='Guest'):\n    print('Hello', name)\ngreet()\ngreet('John')"
+        })
+    elif i == 55:
+        problems.append({
+            "id": i,
+            "title": "Variable Arguments (*args)",
+            "problem": "Function that accepts variable number of arguments.",
+            "solution": "def sum_all(*args):\n    return sum(args)\nprint(sum_all(1,2,3,4,5))"
+        })
+    elif i == 56:
+        problems.append({
+            "id": i,
+            "title": "Lambda Function",
+            "problem": "Use lambda to square a number.",
+            "solution": "square = lambda x: x**2\nprint(square(5))"
+        })
+    elif i == 57:
+        problems.append({
+            "id": i,
+            "title": "Create a Dictionary",
+            "problem": "Create a dictionary with student details.",
+            "solution": "student = {'name': 'Rahul', 'age': 20, 'city': 'Delhi'}\nprint(student)"
+        })
+    elif i == 58:
+        problems.append({
+            "id": i,
+            "title": "Access Dictionary Values",
+            "problem": "Access values from a dictionary.",
+            "solution": "student = {'name': 'Rahul', 'age': 20}\nprint(student['name'])\nprint(student.get('age'))"
+        })
+    elif i == 59:
+        problems.append({
+            "id": i,
+            "title": "Update Dictionary",
+            "problem": "Add/update key-value pairs in dictionary.",
+            "solution": "student = {'name': 'Rahul'}\nstudent['age'] = 20\nstudent['city'] = 'Delhi'\nprint(student)"
+        })
+    elif i == 60:
+        problems.append({
+            "id": i,
+            "title": "Loop Through Dictionary",
+            "problem": "Iterate through dictionary keys and values.",
+            "solution": "student = {'name': 'Rahul', 'age': 20, 'city': 'Delhi'}\nfor key, value in student.items():\n    print(key, ':', value)"
+        })
+    elif i == 61:
+        problems.append({
+            "id": i,
+            "title": "Dictionary Keys/Values",
+            "problem": "Get all keys and values from dictionary.",
+            "solution": "student = {'name': 'Rahul', 'age': 20}\nprint('Keys:', student.keys())\nprint('Values:', student.values())"
+        })
+    elif i == 62:
+        problems.append({
+            "id": i,
+            "title": "Merge Two Dictionaries",
+            "problem": "Merge two dictionaries into one.",
+            "solution": "d1 = {'a': 1, 'b': 2}\nd2 = {'c': 3, 'd': 4}\nd1.update(d2)\nprint(d1)"
+        })
+    elif i == 63:
+        problems.append({
+            "id": i,
+            "title": "Check Key in Dictionary",
+            "problem": "Check if a key exists in dictionary.",
+            "solution": "student = {'name': 'Rahul', 'age': 20}\nif 'name' in student:\n    print('Key exists')"
+        })
+    elif i == 64:
+        problems.append({
+            "id": i,
+            "title": "Nested Dictionary",
+            "problem": "Create and access nested dictionary.",
+            "solution": "students = {'s1': {'name': 'Rahul', 'age': 20}, 's2': {'name': 'Amit', 'age': 22}}\nprint(students['s1']['name'])"
+        })
+    elif i == 65:
+        problems.append({
+            "id": i,
+            "title": "Factorial using Recursion",
+            "problem": "Find factorial using recursive function.",
+            "solution": "def fact(n):\n    if n <= 1:\n        return 1\n    return n * fact(n-1)\nprint(fact(5))"
+        })
+    elif i == 66:
+        problems.append({
+            "id": i,
+            "title": "Fibonacci using Recursion",
+            "problem": "Generate Fibonacci using recursion.",
+            "solution": "def fib(n):\n    if n <= 1:\n        return n\n    return fib(n-1) + fib(n-2)\nprint(fib(6))"
+        })
+    elif i == 67:
+        problems.append({
+            "id": i,
+            "title": "Global vs Local Variable
+
+
+
+
 [
   {
     "id": 1,
