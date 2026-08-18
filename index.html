@@ -1,147 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Tutr - Master Python Step by Step</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&display=swap" rel="stylesheet">
-</head>
-<body>
-
-  <!-- Cinematic Intro Overlay -->
-  <div id="intro-screen" class="intro-screen">
-    <div class="intro-content">
-      <div id="step-1" class="intro-step hindi-text">नमस्ते</div>
-      <div id="step-2" class="intro-step gradient-text">This makes you the best coder.</div>
-      <div id="step-3" class="intro-step cinematic-sub">
-        <span>Over</span>
-        <span class="highlight-count">1000+</span>
-        <span>Curated Python Problems</span>
-      </div>
-    </div>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PythonTutr - Master Python Like a Pro</title>
     
-</div>
-  </div>
-
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">
-      <span class="logo-icon">🐍</span> Python<span class="brand-accent">Tutr</span>
-    </div>
-    <div class="nav-links">
-      <a href="#roadmap">Roadmap</a>
-      <a href="#practice" class="nav-btn">Start Practice</a>
-    </div>
-  </header>
-
-  <main class="main-wrapper">
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Roadmap · Skill Progression</title>
-    <!-- Font & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
     <style>
+        /* ============================================================
+                   GLOBAL RESET & VARIABLES
+                   ============================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #818cf8;
+            --secondary: #7c3aed;
+            --accent: #a78bfa;
+            --bg-dark: #0b1120;
+            --bg-light: #f8faff;
+            --text-dark: #0f172a;
+            --text-gray: #475569;
+            --text-light: #94a3b8;
+            --white: #ffffff;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 30px 80px rgba(79, 70, 229, 0.15);
+            --radius: 2rem;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(145deg, #f8faff 0%, #eef2fc 100%);
-            min-height: 100vh;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+                   SCROLLBAR CUSTOM
+                   ============================================================ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        /* ============================================================
+                   INTRO SCREEN
+                   ============================================================ */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: var(--bg-dark);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem 1.5rem;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            overflow: hidden;
         }
 
-        .roadmap-section {
-            max-width: 1280px;
+        #intro-screen.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        /* Animated Background Particles */
+        #intro-screen::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulseGlow 4s ease-in-out infinite alternate;
+        }
+
+        #intro-screen::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulseGlow 5s ease-in-out infinite alternate-reverse;
+            top: 20%;
+            right: 10%;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+            100% { transform: scale(1.4) translate(50px, -30px); opacity: 1; }
+        }
+
+        .intro-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        .intro-step {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            animation: introFadeUp 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        #step-1 {
+            animation-delay: 0.2s;
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+        }
+        #step-2 {
+            animation-delay: 1.4s;
+            font-size: 3.5rem;
+        }
+        #step-3 {
+            animation-delay: 2.6s;
+            font-size: 2.2rem;
+        }
+
+        @keyframes introFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-light), var(--accent), #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .highlight-count {
+            color: var(--accent);
+            font-weight: 900;
+            font-size: 2.8rem;
+            display: inline-block;
+            animation: countPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes countPulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+                text-shadow: 0 0 40px rgba(167, 139, 250, 0.4);
+            }
+        }
+
+        .intro-sub {
+            color: var(--text-light);
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* Floating Python Emoji */
+        .intro-emoji {
+            font-size: 5rem;
+            display: block;
+            margin-bottom: 1rem;
+            animation: floatEmoji 3s ease-in-out infinite;
+        }
+
+        @keyframes floatEmoji {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        /* ============================================================
+                   NAVBAR
+                   ============================================================ */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2.5rem;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 80px;
+            max-width: 1300px;
+            margin: 1.5rem auto 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 1.5rem;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            animation: logoWiggle 3s ease-in-out infinite;
+        }
+
+        @keyframes logoWiggle {
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-8deg);
+            }
+            75% {
+                transform: rotate(8deg);
+            }
+        }
+
+        .brand-accent {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
             width: 100%;
-            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white) !important;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
+            transition: var(--transition);
+        }
+
+        .nav-btn::after {
+            display: none !important;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 32px rgba(79, 70, 229, 0.35);
+        }
+
+        /* ============================================================
+                   HERO SECTION (New)
+                   ============================================================ */
+        .hero-section {
+            max-width: 1300px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4.2rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 500px;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 1rem 2.8rem;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.3);
+            transition: var(--transition);
+        }
+
+        .hero-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(79, 70, 229, 0.4);
+        }
+
+        .hero-btn-secondary {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-dark);
+            padding: 1rem 2.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .hero-btn-secondary:hover {
+            border-color: var(--primary);
+            background: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2.5rem;
+        }
+
+        .hero-stat h3 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+        }
+
+        .hero-stat p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-code-block {
+            background: var(--bg-dark);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-code-block::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.05) 0%, transparent 70%);
+            animation: rotateBg 20s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-code-block .code-line {
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            padding: 0.3rem 0;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: codeTyping 0.5s ease forwards;
+        }
+
+        .hero-code-block .code-line:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        .hero-code-block .code-line:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+        .hero-code-block .code-line:nth-child(3) {
+            animation-delay: 1s;
+        }
+        .hero-code-block .code-line:nth-child(4) {
+            animation-delay: 1.4s;
+        }
+        .hero-code-block .code-line:nth-child(5) {
+            animation-delay: 1.8s;
+        }
+        .hero-code-block .code-line:nth-child(6) {
+            animation-delay: 2.2s;
+        }
+
+        @keyframes codeTyping {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .code-keyword {
+            color: #818cf8;
+        }
+        .code-function {
+            color: #fbbf24;
+        }
+        .code-string {
+            color: #34d399;
+        }
+        .code-comment {
+            color: #64748b;
+        }
+        .code-variable {
+            color: #f472b6;
+        }
+
+        /* ============================================================
+                   ROADMAP SECTION (Upgraded)
+                   ============================================================ */
+        .roadmap-section {
+            max-width: 1300px;
+            margin: 0 auto 4rem;
+            padding: 4rem 3rem;
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-radius: 4rem 4rem 3rem 3rem;
-            padding: 4rem 2.5rem 5rem;
-            box-shadow: 0 30px 70px rgba(17, 24, 39, 0.08), 0 15px 30px rgba(0, 0, 0, 0.02);
+            border-radius: 4rem;
             border: 1px solid rgba(255, 255, 255, 0.6);
-            transition: all 0.3s;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roadmap-section::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
         .section-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: white;
-            padding: 0.35rem 1.4rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 0.4rem 1.6rem;
             border-radius: 60px;
             font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 1.2rem;
-            box-shadow: 0 8px 18px rgba(79, 70, 229, 0.2);
-            animation: badgePulse 3s infinite alternate;
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
+            animation: badgePulse 3s ease-in-out infinite alternate;
         }
 
         @keyframes badgePulse {
-            0% { box-shadow: 0 8px 18px rgba(79, 70, 229, 0.2); transform: scale(1); }
-            100% { box-shadow: 0 8px 28px rgba(124, 58, 237, 0.35); transform: scale(1.02); }
+            0% {
+                box-shadow: 0 8px 18px rgba(79, 70, 229, 0.2);
+                transform: scale(1);
+            }
+            100% {
+                box-shadow: 0 8px 32px rgba(124, 58, 237, 0.35);
+                transform: scale(1.02);
+            }
         }
 
         .section-title {
-            font-size: 3.2rem;
-            font-weight: 800;
+            font-size: 3.5rem;
+            font-weight: 900;
             letter-spacing: -0.02em;
-            background: linear-gradient(145deg, #0b1120, #1f2937);
+            background: linear-gradient(145deg, var(--bg-dark), var(--text-gray));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 0.5rem;
-            line-height: 1.1;
         }
 
         .section-subtitle {
             font-size: 1.15rem;
-            color: #475569;
+            color: var(--text-gray);
             max-width: 620px;
-            font-weight: 450;
-            line-height: 1.6;
-            margin-bottom: 3.5rem;
-            border-left: 4px solid #818cf8;
+            border-left: 4px solid var(--primary-light);
             padding-left: 1.2rem;
+            margin-bottom: 3.5rem;
+            line-height: 1.7;
         }
 
-        /* ----- roadmap track (modern timeline) ----- */
         .roadmap-track {
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
-            align-items: stretch;
-            gap: 1rem;
-            position: relative;
-            margin-top: 0.5rem;
+            gap: 1.5rem;
             flex-wrap: wrap;
+            position: relative;
         }
 
-        /* animated line — hidden on mobile, visible on larger */
-        .roadmap-line-progress {
-            display: none;
+        .roadmap-track::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-light), var(--accent), var(--primary-light));
+            border-radius: 10px;
+            opacity: 0.3;
         }
 
-        /* each node */
         .roadmap-node {
             flex: 1 1 200px;
             min-width: 180px;
@@ -149,75 +613,441 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: var(--transition);
             opacity: 0;
             animation: nodeAppear 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
             animation-delay: var(--delay, 0.1s);
+            cursor: pointer;
         }
 
         @keyframes nodeAppear {
-            0% { opacity: 0; transform: translateY(30px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .roadmap-node:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-10px) scale(1.02);
         }
 
-        /* circle with gradient + glow */
         .node-circle {
-            width: 80px;
-            height: 80px;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 1.4rem;
-            color: white;
-            background: linear-gradient(145deg, #4f46e5, #7c3aed);
-            box-shadow: 0 12px 30px -6px rgba(79, 70, 229, 0.4);
-            transition: all 0.25s;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: var(--white);
+            background: linear-gradient(145deg, var(--primary), var(--secondary));
+            box-shadow: 0 12px 35px rgba(79, 70, 229, 0.3);
             margin-bottom: 1.5rem;
             position: relative;
             z-index: 3;
-            letter-spacing: 0.5px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(2px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
             flex-shrink: 0;
         }
 
-        .roadmap-node:hover .node-circle {
-            box-shadow: 0 18px 40px -4px rgba(79, 70, 229, 0.6);
-            transform: scale(1.05);
-            background: linear-gradient(145deg, #6366f1, #8b5cf6);
-        }
-
-        /* pseudo connecting line (vertical for mobile, horizontal for desktop) */
-        .roadmap-node:not(:last-child)::after {
+        .node-circle::after {
             content: '';
             position: absolute;
-            top: 40px;
-            right: -50%;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #c7d2fe, #a5b4fc, #c7d2fe);
-            z-index: 1;
-            border-radius: 10px;
-            opacity: 0.6;
-            transition: all 0.3s;
-            box-shadow: 0 0 12px rgba(165, 180, 252, 0.3);
+            inset: -4px;
+            border-radius: 50%;
+            padding: 2px;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.15), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spinGlow 6s linear infinite;
+            pointer-events: none;
         }
 
-        /* responsive: hide line on small screens */
+        @keyframes spinGlow {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .roadmap-node:hover .node-circle {
+            transform: scale(1.08);
+            box-shadow: 0 18px 45px rgba(79, 70, 229, 0.45);
+        }
+
+        .node-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 1.5rem 1.2rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            text-align: center;
+            width: 100%;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+
+        .roadmap-node:hover .node-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .node-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 1.2rem;
+            border-radius: 40px;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+
+        .node-card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .node-card p {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .node-card .level-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        /* ============================================================
+                   PRACTICE SECTION (Upgraded)
+                   ============================================================ */
+        .practice-section {
+            max-width: 1300px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+
+        .practice-card {
+            background: var(--white);
+            border-radius: 3.5rem;
+            padding: 3.5rem 4rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .practice-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 0 0 4px 4px;
+        }
+
+        .practice-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .meta-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #e0e7ff;
+            color: var(--primary-dark);
+            padding: 0.4rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+
+        .badge.difficulty-hard {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .badge.difficulty-medium {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .badge.difficulty-easy {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .category {
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .stats {
+            color: var(--text-gray);
+            font-weight: 600;
+            background: #f1f5f9;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+        }
+
+        .problem-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .problem-desc {
+            font-size: 1.15rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-3px);
+        }
+
+        .btn-success {
+            background: #059669;
+            color: var(--white);
+            box-shadow: 0 8px 30px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(5, 150, 105, 0.4);
+        }
+
+        /* ============================================================
+                   PROGRESS BAR
+                   ============================================================ */
+        .progress-container {
+            max-width: 1300px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+            border-radius: 10px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        /* ============================================================
+                   FOOTER
+                   ============================================================ */
+        .footer {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-social a {
+            color: var(--text-gray);
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-copy {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* ============================================================
+                   RESPONSIVE
+                   ============================================================ */
+        @media (max-width: 1024px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .hero-code-block {
+                max-width: 100%;
+            }
+            .section-title {
+                font-size: 2.8rem;
+            }
+            .problem-title {
+                font-size: 2.2rem;
+            }
+        }
+
         @media (max-width: 850px) {
-            .roadmap-node:not(:last-child)::after {
-                display: none;
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 1.5rem;
+                border-radius: 40px;
+                margin: 1rem 1rem 1.5rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
             }
             .roadmap-track {
                 flex-direction: column;
                 align-items: stretch;
                 gap: 2rem;
+            }
+            .roadmap-track::before {
+                display: none;
             }
             .roadmap-node {
                 flex-direction: row;
@@ -231,243 +1061,179 @@
                 height: 70px;
                 font-size: 1.2rem;
                 margin-bottom: 0;
-                flex-shrink: 0;
             }
             .node-card {
                 flex: 1;
                 min-width: 180px;
             }
-            .section-title {
-                font-size: 2.6rem;
-            }
-        }
-
-        /* card */
-        .node-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 28px;
-            padding: 1.5rem 1.2rem 1.8rem;
-            box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            transition: all 0.3s ease;
-            text-align: center;
-            width: 100%;
-            flex: 1;
-        }
-
-        .roadmap-node:hover .node-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: #818cf8;
-            box-shadow: 0 24px 48px -18px rgba(79, 70, 229, 0.2);
-            transform: scale(1.01);
-        }
-
-        .node-tag {
-            display: inline-block;
-            background: #e0e7ff;
-            color: #4338ca;
-            font-weight: 600;
-            font-size: 0.7rem;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
-            padding: 0.25rem 1rem;
-            border-radius: 40px;
-            margin-bottom: 0.8rem;
-            border: 1px solid rgba(79, 70, 229, 0.15);
-        }
-
-        .node-card h3 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.01em;
-        }
-
-        .node-card p {
-            font-size: 0.95rem;
-            color: #334155;
-            line-height: 1.5;
-            font-weight: 450;
-        }
-
-        /* ----- new: animated progress bar (desktop) ----- */
-        @media (min-width: 851px) {
-            .roadmap-track {
-                position: relative;
-                padding-top: 1rem;
-            }
-
-            .roadmap-track::before {
-                content: '';
-                position: absolute;
-                top: 40px;
-                left: 10%;
-                width: 80%;
-                height: 4px;
-                background: rgba(199, 210, 254, 0.3);
-                border-radius: 20px;
-                z-index: 0;
-            }
-
-            .roadmap-track::after {
-                content: '';
-                position: absolute;
-                top: 40px;
-                left: 10%;
-                width: 0%;
-                height: 4px;
-                background: linear-gradient(90deg, #4f46e5, #7c3aed, #a78bfa);
-                border-radius: 20px;
-                z-index: 1;
-                box-shadow: 0 0 20px #818cf8;
-                animation: lineGrow 1.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-                animation-delay: 0.4s;
-            }
-
-            @keyframes lineGrow {
-                0% { width: 0%; opacity: 0.3; }
-                100% { width: 80%; opacity: 1; }
-            }
-
-            /* each node gets a shine */
-            .roadmap-node {
-                align-items: center;
-            }
-
-            .roadmap-node:not(:last-child)::after {
-                display: none; /* hide old line */
-            }
-        }
-
-        /* extra glow on icons inside circle */
-        .node-circle i {
-            display: none; /* we use numbers, but we can add mini icon via pseudo */
-        }
-
-        /* optional small icon inside node-circle via pseudo */
-        .node-circle::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            padding: 2px;
-            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.2), transparent 60%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: spinGlow 6s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes spinGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* modern touch: floating dots */
-        .roadmap-section {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .roadmap-section::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(165, 180, 252, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .roadmap-section::after {
-            content: '';
-            position: absolute;
-            bottom: -10%;
-            left: -5%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.06) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .roadmap-track, .section-badge, .section-title, .section-subtitle {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* responsive fine-tune */
-        @media (max-width: 480px) {
             .roadmap-section {
-                padding: 2rem 1.2rem 3rem;
+                padding: 2.5rem 1.5rem;
                 border-radius: 2.5rem;
+            }
+            .practice-card {
+                padding: 2rem 1.5rem;
+                border-radius: 2.5rem;
+            }
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .intro-step {
+                font-size: 3rem !important;
+            }
+            #step-1 {
+                font-size: 4rem !important;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
             }
             .section-title {
                 font-size: 2rem;
             }
-            .node-card h3 {
-                font-size: 1.1rem;
+            .problem-title {
+                font-size: 1.6rem;
             }
-            .node-card p {
-                font-size: 0.85rem;
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
-            .node-circle {
-                width: 60px;
-                height: 60px;
-                font-size: 1rem;
+            .practice-card {
+                padding: 1.5rem 1rem;
             }
-        }
-
-        /* extra hover effect: card lift */
-        .roadmap-node {
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .roadmap-node:hover .node-card {
-            transition: all 0.25s;
-        }
-
-        /* small indicator: progress step */
-        .node-tag i {
-            margin-right: 6px;
-            font-size: 0.65rem;
-            opacity: 0.8;
-        }
-
-        /* add a subtle animated gradient to card border on hover */
-        .roadmap-node:hover .node-card {
-            background: rgba(255, 255, 255, 0.85);
-            border-image: linear-gradient(135deg, #818cf8, #a78bfa) 1;
-            border-image-slice: 1;
-            border-width: 1.5px;
-            border-style: solid;
-            border-color: transparent;
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-        }
-
-        /* extra flair: level icon */
-        .node-card .level-icon {
-            display: inline-block;
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-            color: #4f46e5;
+            .card-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .hero-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .intro-step {
+                font-size: 2rem !important;
+            }
+            #step-1 {
+                font-size: 3rem !important;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- ============================================================
+    INTRO SCREEN
+    ============================================================ -->
+    <div id="intro-screen">
+        <div class="intro-content">
+            <span class="intro-emoji">🐍</span>
+            <div id="step-1" class="intro-step">नमस्ते</div>
+            <div id="step-2" class="intro-step gradient-text">Master Python Like a Pro</div>
+            <div id="step-3" class="intro-step">
+                <span class="intro-sub">Over</span>
+                <span class="highlight-count">1000+</span>
+                <span class="intro-sub">Curated Problems</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    NAVBAR
+    ============================================================ -->
+    <header class="navbar" id="navbar">
+        <div class="logo">
+            <span class="logo-icon">🐍</span>
+            Python<span class="brand-accent">Tutr</span>
+        </div>
+        <div class="nav-links">
+            <a href="#roadmap">Roadmap</a>
+            <a href="#practice">Practice</a>
+            <a href="#practice" class="nav-btn">Start Learning 🚀</a>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    HERO SECTION
+    ============================================================ -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>
+                Learn Python.<br />
+                <span class="highlight">Build Anything.</span>
+            </h1>
+            <p>
+                From zero to hero — master Python with 1000+ curated problems,
+                real-world projects, and an interactive roadmap designed for
+                your success.
+            </p>
+            <div class="hero-buttons">
+                <a href="#practice">
+                    <button class="hero-btn-primary">
+                        <i class="fas fa-play-circle"></i> Start Practice
+                    </button>
+                </a>
+                <a href="#roadmap">
+                    <button class="hero-btn-secondary">
+                        <i class="fas fa-map"></i> View Roadmap
+                    </button>
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <h3>1000+</h3>
+                    <p>Problems</p>
+                </div>
+                <div class="hero-stat">
+                    <h3>4</h3>
+                    <p>Skill Levels</p>
+                </div>
+                <div class="hero-stat">
+                    <h3>100%</h3>
+                    <p>Free Access</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-code-block">
+                <div class="code-line"><span class="code-comment"># Python is Beautiful</span></div>
+                <div class="code-line"><span class="code-keyword">def</span> <span class="code-function">master_python</span>():</div>
+                <div class="code-line">&nbsp;&nbsp;<span class="code-variable">skills</span> = [<span class="code-string">"Basics"</span>, <span class="code-string">"OOP"</span>, <span class="code-string">"Advanced"</span>]</div>
+                <div class="code-line">&nbsp;&nbsp;<span class="code-keyword">for</span> skill <span class="code-keyword">in</span> skills:</div>
+                <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Learning {skill}..."</span>)</div>
+                <div class="code-line">&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"🚀 You're a Python Pro!"</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PROGRESS BAR
+    ============================================================ -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressFill" style="width: 0%;"></div>
+        </div>
+        <div class="progress-label">
+            <span>Your Progress</span>
+            <span id="progressText">0%</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    ROADMAP SECTION
+    ============================================================ -->
     <section id="roadmap" class="roadmap-section">
-        <span class="section-badge"><i class="fas fa-route" style="margin-right: 8px;"></i> Skill Progression</span>
+        <span class="section-badge">
+            <i class="fas fa-route"></i> Skill Progression
+        </span>
         <h2 class="section-title">Zero to Advanced Roadmap</h2>
-        <p class="section-subtitle">A step-by-step master plan designed to take you from foundational syntax to building complex software.</p>
+        <p class="section-subtitle">
+            A step-by-step master plan designed to take you from foundational
+            syntax to building complex software with confidence.
+        </p>
 
         <div class="roadmap-track">
             <!-- Node 01 -->
@@ -475,8 +1241,8 @@
                 <div class="node-circle">01</div>
                 <div class="node-card">
                     <span class="node-tag"><i class="fas fa-flag-checkered"></i> Level 0</span>
-                    <div class="level-icon"><i class="fas fa-code"></i></div>
-                    <h3>Basics & Logic</h3>
+                    <span class="level-icon"><i class="fas fa-code"></i></span>
+                    <h3>Basics &amp; Logic</h3>
                     <p>Variables, loops, conditionals, and fundamental problem-solving.</p>
                 </div>
             </div>
@@ -486,7 +1252,7 @@
                 <div class="node-circle">02</div>
                 <div class="node-card">
                     <span class="node-tag"><i class="fas fa-layer-group"></i> Level 1</span>
-                    <div class="level-icon"><i class="fas fa-database"></i></div>
+                    <span class="level-icon"><i class="fas fa-database"></i></span>
                     <h3>Data Structures</h3>
                     <p>Lists, dictionaries, sets, tuples, and built-in algorithms.</p>
                 </div>
@@ -497,8 +1263,8 @@
                 <div class="node-circle">03</div>
                 <div class="node-card">
                     <span class="node-tag"><i class="fas fa-cubes"></i> Level 2</span>
-                    <div class="level-icon"><i class="fas fa-project-diagram"></i></div>
-                    <h3>OOP & Modularity</h3>
+                    <span class="level-icon"><i class="fas fa-project-diagram"></i></span>
+                    <h3>OOP &amp; Modularity</h3>
                     <p>Classes, inheritance, encapsulation, and clean architecture.</p>
                 </div>
             </div>
@@ -508,75 +1274,299 @@
                 <div class="node-circle">04</div>
                 <div class="node-card">
                     <span class="node-tag"><i class="fas fa-rocket"></i> Level 3</span>
-                    <div class="level-icon"><i class="fas fa-microchip"></i></div>
-                    <h3>Advanced & Projects</h3>
+                    <span class="level-icon"><i class="fas fa-microchip"></i></span>
+                    <h3>Advanced &amp; Projects</h3>
                     <p>Async I/O, decorators, automation apps, and system design.</p>
                 </div>
             </div>
         </div>
-
-        <!-- subtle decorative line (mobile only) -->
-        <div style="display: none;" class="roadmap-line-progress" id="roadmap-line"></div>
     </section>
 
-    <!-- tiny script for extra interactivity: active node highlight on click (optional) -->
+    <!-- ============================================================
+    PRACTICE SECTION
+    ============================================================ -->
+    <section id="practice" class="practice-section">
+        <div class="practice-card">
+            <div class="card-meta">
+                <div class="meta-left">
+                    <span class="badge difficulty-easy" id="problem-difficulty">
+                        <i class="fas fa-circle"></i> Beginner
+                    </span>
+                    <span class="category" id="problem-category">
+                        <i class="fas fa-tag"></i> Fundamentals
+                    </span>
+                </div>
+                <div class="stats" id="progress-stat">
+                    <i class="fas fa-check-circle"></i> Problem 1 of 1000
+                </div>
+            </div>
+
+            <h1 class="problem-title" id="problem-title">
+                <i class="fas fa-spinner fa-spin"></i> Loading...
+            </h1>
+            <p class="problem-desc" id="problem-desc">
+                Please wait while we load your first challenge.
+            </p>
+
+            <div class="actions">
+                <button id="btn-done" class="btn btn-success">
+                    <i class="fas fa-check"></i> Done / View Solution
+                </button>
+                <button id="btn-next" class="btn btn-secondary">
+                    Next Challenge <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <span class="logo-icon">🐍</span> Python<span class="brand-accent">Tutr</span>
+        </div>
+        <div class="footer-links">
+            <a href="#roadmap">Roadmap</a>
+            <a href="#practice">Practice</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-social">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+        </div>
+        <div class="footer-copy">
+            &copy; 2026 PythonTutr — Made with ❤️ for every Python learner.
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    SCRIPTS
+    ============================================================ -->
     <script>
+        // ============================================================
+        // 1. INTRO SCREEN HIDE
+        // ============================================================
+        setTimeout(() => {
+            const intro = document.getElementById('intro-screen');
+            if (intro) intro.classList.add('hidden');
+        }, 4200);
+
+        // ============================================================
+        // 2. NAVBAR SCROLL EFFECT
+        // ============================================================
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================================
+        // 3. ROADMAP NODE CLICK INTERACTION
+        // ============================================================
         (function() {
             const nodes = document.querySelectorAll('.roadmap-node');
             nodes.forEach(node => {
                 node.addEventListener('click', function(e) {
-                    // remove active from others
                     nodes.forEach(n => n.classList.remove('active-node'));
                     this.classList.add('active-node');
-                    // minor visual feedback
+
                     const circle = this.querySelector('.node-circle');
-                    circle.style.transition = 'all 0.1s';
-                    circle.style.transform = 'scale(0.92)';
+                    circle.style.transition = 'all 0.15s';
+                    circle.style.transform = 'scale(0.9)';
                     setTimeout(() => {
-                        circle.style.transform = 'scale(1.05)';
-                    }, 100);
+                        circle.style.transform = 'scale(1.08)';
+                    }, 150);
                     setTimeout(() => {
                         circle.style.transform = '';
-                    }, 300);
+                    }, 350);
+
+                    // Update progress
+                    const index = Array.from(nodes).indexOf(this);
+                    const progress = ((index + 1) / nodes.length) * 100;
+                    updateProgress(progress);
                 });
             });
-            // add active class style
+
+            // Add active styles
             const style = document.createElement('style');
             style.innerHTML = `
-                .roadmap-node.active-node .node-card {
-                    border-color: #4f46e5;
-                    box-shadow: 0 20px 40px -12px rgba(79, 70, 229, 0.25);
-                    background: rgba(255, 255, 255, 0.9);
-                }
-                .roadmap-node.active-node .node-circle {
-                    background: linear-gradient(145deg, #7c3aed, #4f46e5);
-                    box-shadow: 0 14px 34px -4px #7c3aed;
-                }
-            `;
+                        .roadmap-node.active-node .node-card {
+                            border-color: #4f46e5;
+                            box-shadow: 0 20px 40px -12px rgba(79, 70, 229, 0.25);
+                            background: rgba(255, 255, 255, 0.95);
+                        }
+                        .roadmap-node.active-node .node-circle {
+                            background: linear-gradient(145deg, #7c3aed, #4f46e5);
+                            box-shadow: 0 14px 40px -4px #7c3aed;
+                            transform: scale(1.05);
+                        }
+                    `;
             document.head.appendChild(style);
         })();
+
+        // ============================================================
+        // 4. PROGRESS BAR
+        // ============================================================
+        function updateProgress(percent) {
+            const fill = document.getElementById('progressFill');
+            const text = document.getElementById('progressText');
+            if (fill && text) {
+                fill.style.width = Math.min(percent, 100) + '%';
+                text.textContent = Math.round(Math.min(percent, 100)) + '%';
+            }
+        }
+
+        // Auto progress on scroll
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            // Don't override click progress, but show scroll progress if less
+            const current = parseFloat(document.getElementById('progressFill').style.width) || 0;
+            if (progress > current) {
+                updateProgress(progress);
+            }
+        });
+
+        // ============================================================
+        // 5. PRACTICE SECTION - DYNAMIC PROBLEMS (Demo)
+        // ============================================================
+        const problems = [{
+            title: "Hello, Python!",
+            desc: "Write a Python program that prints 'Hello, Python!' to the console. This is your first step into the world of programming!",
+            difficulty: "easy",
+            category: "Basics"
+        }, {
+            title: "Sum of Two Numbers",
+            desc: "Write a function that takes two numbers as input and returns their sum. Test it with 5 and 10.",
+            difficulty: "easy",
+            category: "Arithmetic"
+        }, {
+            title: "Check Even or Odd",
+            desc: "Create a program that checks if a given number is even or odd. Print 'Even' or 'Odd' accordingly.",
+            difficulty: "easy",
+            category: "Conditionals"
+        }, {
+            title: "Reverse a String",
+            desc: "Write a function that takes a string and returns it reversed. For example, 'hello' becomes 'olleh'.",
+            difficulty: "medium",
+            category: "Strings"
+        }, {
+            title: "Fibonacci Sequence",
+            desc: "Generate the first 10 numbers of the Fibonacci sequence. Each number is the sum of the two preceding ones.",
+            difficulty: "medium",
+            category: "Loops"
+        }, {
+            title: "Palindrome Checker",
+            desc: "Write a function that checks if a given string is a palindrome (reads the same forward and backward).",
+            difficulty: "medium",
+            category: "Strings"
+        }, {
+            title: "Factorial Calculator",
+            desc: "Write a recursive function to calculate the factorial of a number. Factorial of 5 is 5×4×3×2×1 = 120.",
+            difficulty: "medium",
+            category: "Recursion"
+        }, {
+            title: "Bubble Sort Algorithm",
+            desc: "Implement the bubble sort algorithm to sort a list of numbers in ascending order.",
+            difficulty: "hard",
+            category: "Algorithms"
+        }];
+
+        let currentProblem = 0;
+        const totalProblems = problems.length;
+
+        function loadProblem(index) {
+            const p = problems[index % problems.length];
+            document.getElementById('problem-title').textContent = p.title;
+            document.getElementById('problem-desc').textContent = p.desc;
+
+            const diffBadge = document.getElementById('problem-difficulty');
+            diffBadge.innerHTML = `<i class="fas fa-circle"></i> ${p.difficulty.charAt(0).toUpperCase() + p.difficulty.slice(1)}`;
+            diffBadge.className = 'badge';
+            if (p.difficulty === 'easy') diffBadge.classList.add('difficulty-easy');
+            else if (p.difficulty === 'medium') diffBadge.classList.add('difficulty-medium');
+            else if (p.difficulty === 'hard') diffBadge.classList.add('difficulty-hard');
+
+            document.getElementById('problem-category').innerHTML = `<i class="fas fa-tag"></i> ${p.category}`;
+            document.getElementById('progress-stat').innerHTML =
+                `<i class="fas fa-check-circle"></i> Problem ${index + 1} of ${totalProblems}`;
+
+            // Update progress based on problems solved
+            const progress = ((index) / totalProblems) * 100;
+            updateProgress(progress);
+        }
+
+        // Load first problem
+        loadProblem(0);
+
+        // Next button
+        document.getElementById('btn-next').addEventListener('click', () => {
+            currentProblem = (currentProblem + 1) % totalProblems;
+            loadProblem(currentProblem);
+        });
+
+        // Done button
+        document.getElementById('btn-done').addEventListener('click', () => {
+            const btn = document.getElementById('btn-done');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Solution...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const p = problems[currentProblem % problems.length];
+                alert(`✅ Solution for "${p.title}":\n\n` +
+                    `💡 Hint: Think about the logic step by step.\n` +
+                    `🔑 Key Concept: ${p.category}\n\n` +
+                    `📝 Try writing the code yourself first!`);
+                btn.innerHTML = '<i class="fas fa-check"></i> Done / View Solution';
+                btn.disabled = false;
+            }, 800);
+        });
+
+        // ============================================================
+        // 6. KEYBOARD SHORTCUTS
+        // ============================================================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                document.getElementById('btn-next').click();
+            }
+            if (e.key === 'Enter') {
+                document.getElementById('btn-done').click();
+            }
+        });
+
+        // ============================================================
+        // 7. SMOOTH SCROLL FOR NAV LINKS
+        // ============================================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ============================================================
+        // 8. CONSOLE WELCOME
+        // ============================================================
+        console.log('%c🐍 Welcome to PythonTutr!', 'font-size: 24px; font-weight: bold; color: #4f46e5;');
+        console.log('%cMaster Python step by step with 1000+ curated problems.', 'font-size: 14px; color: #475569;');
+        console.log('%c🚀 Start practicing now!', 'font-size: 14px; color: #7c3aed;');
     </script>
+
 </body>
 </html>
-    <!-- Practice Section -->
-    <section id="practice" class="practice-section">
-      <div class="practice-card">
-        <div class="card-meta">
-          <div class="meta-left">
-            <span class="badge" id="problem-difficulty">Beginner</span>
-            <span class="category" id="problem-category">App Development</span>
-          </div>
-          <div class="stats" id="progress-stat">Problem 1 of 1000</div>
-        </div>
-
-        <h1 class="problem-title" id="problem-title">Loading problem...</h1>
-        <p class="problem-desc" id="problem-desc"></p>
-
-        <div class="actions">
-          <button id="btn-done" class="btn btn-primary">Done / View Solution ✨</button>
-          <button id="btn-next" class="btn btn-secondary">Next Challenge ➡️</button>
-        </div>
-
       <script>
   atOptions = {
     'key' : 'c7332245557b4fcd6c5c48c862a95849',
