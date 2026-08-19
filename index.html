@@ -8,7 +8,7 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
     <style>
@@ -27,6 +27,7 @@
             --white: #ffffff;
             --shadow: 0 20px 60px rgba(0,0,0,0.08);
             --shadow-hover: 0 30px 80px rgba(79,70,229,0.15);
+            --radius: 2rem;
             --transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
         }
         html { scroll-behavior: smooth; }
@@ -41,6 +42,291 @@
         ::-webkit-scrollbar-track { background: var(--bg-light); }
         ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; }
 
+        /* ============================================
+           SOLUTION MODAL - NEW BEAUTIFUL UI
+           ============================================ */
+        .solution-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeInOverlay 0.3s ease;
+        }
+        .solution-overlay.active {
+            display: flex;
+        }
+        @keyframes fadeInOverlay {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes slideUpModal {
+            0% { transform: translateY(40px) scale(0.95); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .solution-modal {
+            background: var(--white);
+            border-radius: 2.5rem;
+            max-width: 850px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 0;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+            animation: slideUpModal 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+        }
+        .solution-modal::-webkit-scrollbar { width: 4px; }
+        .solution-modal::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .solution-modal::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+
+        /* Modal Header */
+        .modal-header {
+            padding: 2rem 2.5rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            border-radius: 2.5rem 2.5rem 0 0;
+            z-index: 10;
+        }
+        .modal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .modal-header-left .modal-icon {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .modal-header-left .modal-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+        .modal-header-left .modal-difficulty {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            background: #d1fae5;
+            color: #059669;
+        }
+        .modal-header-left .modal-difficulty.hard { background: #fee2e2; color: #dc2626; }
+        .modal-header-left .modal-difficulty.medium { background: #fef3c7; color: #d97706; }
+        .modal-header-left .modal-difficulty.easy { background: #d1fae5; color: #059669; }
+
+        .modal-close {
+            background: #f1f5f9;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            flex-shrink: 0;
+        }
+        .modal-close:hover {
+            background: #e2e8f0;
+            transform: rotate(90deg);
+            color: var(--text-dark);
+        }
+
+        /* Modal Body */
+        .modal-body {
+            padding: 1.5rem 2.5rem 2.5rem;
+        }
+        .modal-body .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .modal-body .section-label i {
+            font-size: 0.8rem;
+        }
+
+        .modal-body .problem-desc-box {
+            background: #f8fafc;
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-light);
+        }
+        .modal-body .problem-desc-box p {
+            font-size: 1rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .modal-body .hint-box {
+            background: #fefce8;
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #fbbf24;
+        }
+        .modal-body .hint-box p {
+            font-size: 1rem;
+            color: #78350f;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Code Block */
+        .code-block-wrapper {
+            background: var(--bg-dark);
+            border-radius: 1.2rem;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .code-block-wrapper .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .code-block-wrapper .code-header .code-lang {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .code-block-wrapper .code-header .code-lang i {
+            color: var(--primary-light);
+        }
+        .code-block-wrapper .code-header .copy-btn {
+            background: rgba(255,255,255,0.08);
+            border: none;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .code-block-wrapper .code-header .copy-btn:hover {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+        }
+        .code-block-wrapper .code-header .copy-btn.copied {
+            background: #059669;
+            color: var(--white);
+        }
+        .code-block-wrapper pre {
+            margin: 0;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+        .code-block-wrapper pre .code-keyword { color: #818cf8; }
+        .code-block-wrapper pre .code-function { color: #fbbf24; }
+        .code-block-wrapper pre .code-string { color: #34d399; }
+        .code-block-wrapper pre .code-comment { color: #64748b; }
+        .code-block-wrapper pre .code-variable { color: #f472b6; }
+        .code-block-wrapper pre .code-number { color: #60a5fa; }
+        .code-block-wrapper pre .code-operator { color: #c084fc; }
+
+        .modal-body .explanation-box {
+            background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            border-left: 4px solid var(--secondary);
+        }
+        .modal-body .explanation-box p {
+            font-size: 1rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Modal Footer */
+        .modal-footer {
+            padding: 1.5rem 2.5rem 2rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+        .modal-footer .btn-modal {
+            padding: 0.7rem 2rem;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .modal-footer .btn-modal-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            box-shadow: 0 8px 24px rgba(79,70,229,0.25);
+        }
+        .modal-footer .btn-modal-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(79,70,229,0.35);
+        }
+        .modal-footer .btn-modal-secondary {
+            background: #f1f5f9;
+            color: var(--text-dark);
+        }
+        .modal-footer .btn-modal-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           REST OF THE STYLES (Your Existing Styles)
+           ============================================ */
+        /* ... keep all your existing styles from before ... */
+        
         /* INTRO SCREEN */
         #intro-screen {
             position: fixed;
@@ -350,15 +636,10 @@
             font-size: 1rem; cursor: pointer; transition: var(--transition);
             display: inline-flex; align-items: center; gap: 0.5rem;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white); box-shadow: 0 8px 30px rgba(79,70,229,0.3);
-        }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(79,70,229,0.4); }
-        .btn-secondary { background: #f1f5f9; color: var(--text-dark); }
-        .btn-secondary:hover { background: #e2e8f0; transform: translateY(-3px); }
         .btn-success { background: #059669; color: var(--white); box-shadow: 0 8px 30px rgba(5,150,105,0.3); }
         .btn-success:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(5,150,105,0.4); }
+        .btn-secondary { background: #f1f5f9; color: var(--text-dark); }
+        .btn-secondary:hover { background: #e2e8f0; transform: translateY(-3px); }
 
         /* Filter Controls */
         .filter-controls {
@@ -461,6 +742,7 @@
             .hero-code-block { max-width: 100%; }
             .section-title { font-size: 2.8rem; }
             .problem-title { font-size: 2.2rem; }
+            .solution-modal { max-width: 95%; margin: 1rem; }
         }
         @media (max-width: 850px) {
             .navbar { flex-direction: column; gap: 1rem; padding: 1rem 1.5rem; border-radius: 40px; margin: 1rem 1rem 1.5rem; }
@@ -479,6 +761,10 @@
             .nav-controls { flex-direction: column; align-items: stretch; }
             .problem-counter { margin-left: 0; }
             .filter-controls { justify-content: center; }
+            .modal-header { flex-direction: column; align-items: stretch; }
+            .modal-body { padding: 1.5rem; }
+            .modal-footer { flex-direction: column; }
+            .modal-footer .btn-modal { width: 100%; justify-content: center; }
         }
         @media (max-width: 480px) {
             .hero-content h1 { font-size: 2.2rem; }
@@ -490,6 +776,10 @@
             .hero-stats { flex-direction: column; gap: 0.5rem; }
             .intro-step { font-size: 2rem !important; }
             #step-1 { font-size: 3rem !important; }
+            .solution-modal { border-radius: 1.5rem; max-height: 95vh; }
+            .modal-header { padding: 1.2rem 1.2rem 1rem; }
+            .modal-body { padding: 1.2rem; }
+            .modal-footer { padding: 1.2rem; }
         }
 
         .roadmap-node.active-node .node-card { border-color: #4f46e5; box-shadow: 0 20px 40px -12px rgba(79,70,229,0.25); background: rgba(255,255,255,0.95); }
@@ -498,7 +788,7 @@
 </head>
 <body>
 
-<!-- INTRO -->
+<!-- INTRO SCREEN -->
 <div id="intro-screen">
     <div class="intro-content">
         <span class="intro-emoji">🐍</span>
@@ -522,7 +812,7 @@
     </div>
 </header>
 
-<!-- HERO -->
+<!-- HERO SECTION -->
 <section class="hero-section">
     <div class="hero-content">
         <h1>Learn Python.<br /><span class="highlight">Build Anything.</span></h1>
@@ -550,13 +840,13 @@
     </div>
 </section>
 
-<!-- PROGRESS -->
+<!-- PROGRESS BAR -->
 <div class="progress-container">
     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%;"></div></div>
     <div class="progress-label"><span>Your Progress</span><span id="progressText">0%</span></div>
 </div>
 
-<!-- ROADMAP -->
+<!-- ROADMAP SECTION -->
 <section id="roadmap" class="roadmap-section">
     <span class="section-badge"><i class="fas fa-route"></i> Skill Progression</span>
     <h2 class="section-title">Zero to Advanced Roadmap</h2>
@@ -569,7 +859,7 @@
     </div>
 </section>
 
-<!-- PRACTICE -->
+<!-- PRACTICE SECTION -->
 <section id="practice" class="practice-section">
     <div class="practice-card">
         <div class="card-meta">
@@ -580,7 +870,6 @@
             <div class="stats" id="progress-stat"><i class="fas fa-check-circle"></i> Problem <span id="currentNum">1</span> of <span id="totalNum">500</span></div>
         </div>
         
-        <!-- Filter Controls -->
         <div class="filter-controls" id="filterControls">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="beginner">Beginner</button>
@@ -593,11 +882,10 @@
         <p class="problem-desc" id="problem-desc">Please wait while we load your first challenge.</p>
         
         <div class="actions">
-            <button id="btn-done" class="btn btn-success"><i class="fas fa-check"></i> Done / View Solution</button>
+            <button id="btn-done" class="btn btn-success"><i class="fas fa-check"></i> View Solution</button>
             <button id="btn-next" class="btn btn-secondary">Next Challenge <i class="fas fa-arrow-right"></i></button>
         </div>
         
-        <!-- Navigation Controls -->
         <div class="nav-controls">
             <button id="btn-prev" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Previous</button>
             <span class="page-info">Problem <span id="currentPage">1</span> of <span id="totalPages">500</span></span>
@@ -611,6 +899,62 @@
     </div>
 </section>
 
+<!-- ============================================================
+     SOLUTION MODAL - BEAUTIFUL UI
+     ============================================================ -->
+<div class="solution-overlay" id="solutionOverlay">
+    <div class="solution-modal">
+        <!-- Header -->
+        <div class="modal-header">
+            <div class="modal-header-left">
+                <div class="modal-icon"><i class="fas fa-code"></i></div>
+                <div>
+                    <div class="modal-title" id="modalTitle">Solution</div>
+                    <span class="modal-difficulty easy" id="modalDifficulty">Beginner</span>
+                </div>
+            </div>
+            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <!-- Body -->
+        <div class="modal-body">
+            <!-- Problem Description -->
+            <div class="section-label"><i class="fas fa-question-circle"></i> Problem</div>
+            <div class="problem-desc-box">
+                <p id="modalDescription">Loading...</p>
+            </div>
+            
+            <!-- Hint -->
+            <div class="section-label"><i class="fas fa-lightbulb"></i> Hint</div>
+            <div class="hint-box">
+                <p id="modalHint">Think about the solution approach...</p>
+            </div>
+            
+            <!-- Solution Code -->
+            <div class="section-label"><i class="fas fa-terminal"></i> Solution</div>
+            <div class="code-block-wrapper">
+                <div class="code-header">
+                    <span class="code-lang"><i class="fab fa-python"></i> Python</span>
+                    <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Copy</button>
+                </div>
+                <pre id="modalSolution"><code>Loading...</code></pre>
+            </div>
+            
+            <!-- Explanation -->
+            <div class="section-label"><i class="fas fa-graduation-cap"></i> Explanation</div>
+            <div class="explanation-box">
+                <p id="modalExplanation">Understanding the solution approach...</p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="modal-footer">
+            <button class="btn-modal btn-modal-secondary" id="modalCloseBtn"><i class="fas fa-times"></i> Close</button>
+            <button class="btn-modal btn-modal-primary" id="modalNextBtn"><i class="fas fa-arrow-right"></i> Next Problem</button>
+        </div>
+    </div>
+</div>
+
 <!-- FOOTER -->
 <footer class="footer">
     <div class="footer-logo"><span class="logo-icon">🐍</span> Python<span class="brand-accent">Tutr</span></div>
@@ -619,6 +963,9 @@
     <div class="footer-copy">&copy; 2026 PythonTutr — Made with ❤️ for every Python learner.</div>
 </footer>
 
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
 <script>
 // ============================================================
 // COMPLETE 500+ PROBLEMS GENERATOR
@@ -641,6 +988,7 @@ function generateAllProblems() {
     ];
     
     const difficulties = ['beginner', 'intermediate', 'advanced', 'expert'];
+    const difficultyLabels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
     const emojis = ['📚', '💻', '🎯', '🚀', '🔥', '💡', '⚡', '🌟', '🎨', '🧠', 
                     '📊', '🔍', '💪', '🏆', '🌈', '⭐', '💎', '✨', '🌟', '💫'];
     const actions = ['solve', 'implement', 'handle', 'process', 'manage', 
@@ -660,13 +1008,14 @@ function generateAllProblems() {
     
     for (let i = 0; i < 500; i++) {
         const topic = topics[i % topics.length];
-        const difficulty = difficulties[i % difficulties.length];
+        const diffIndex = i % difficulties.length;
+        const difficulty = difficulties[diffIndex];
+        const diffLabel = difficultyLabels[diffIndex];
         const emoji = emojis[i % emojis.length];
         const action = actions[i % actions.length];
         const descTemplate = descriptions[i % descriptions.length];
         
         const funcName = `${topic.toLowerCase().replace(/[^a-z0-9]/g, '_')}_${i}`;
-        const className = `${topic.replace(/[^a-zA-Z0-9]/g, '')}Handler_${i}`;
         
         problems.push({
             id: i + 1,
@@ -674,7 +1023,7 @@ function generateAllProblems() {
             difficulty: difficulty,
             category: topic,
             description: descTemplate.replace(/{action}/g, action).replace(/{topic}/g, topic),
-            solution: `def ${funcName}(data):\n    """\n    ${topic} solution for problem #${i+1}\n    Difficulty: ${difficulty}\n    """\n    # Your ${topic} implementation here\n    result = data  # Replace with actual logic\n    return result`,
+            solution: `def ${funcName}(data):\n    """\n    ${topic} solution for problem #${i+1}\n    Difficulty: ${diffLabel}\n    """\n    # Your ${topic} implementation here\n    result = data  # Replace with actual logic\n    return result`,
             explanation: `This solution demonstrates ${topic} concepts in Python with best practices and efficient implementation.`,
             hint: `Think about using Python's ${topic} features effectively. Consider edge cases.`
         });
@@ -705,6 +1054,15 @@ const currentPage = document.getElementById('currentPage');
 const totalPages = document.getElementById('totalPages');
 const progressFill = document.getElementById('progressFill');
 const progressText = document.getElementById('progressText');
+
+// Modal Elements
+const solutionOverlay = document.getElementById('solutionOverlay');
+const modalTitle = document.getElementById('modalTitle');
+const modalDifficulty = document.getElementById('modalDifficulty');
+const modalDescription = document.getElementById('modalDescription');
+const modalHint = document.getElementById('modalHint');
+const modalSolution = document.getElementById('modalSolution');
+const modalExplanation = document.getElementById('modalExplanation');
 
 // ============================================================
 // 1. INTRO SCREEN HIDE
@@ -762,29 +1120,23 @@ function updateCounts() {
 }
 
 // ============================================================
-// 6. LOAD PROBLEM - MAIN FUNCTION
+// 6. LOAD PROBLEM
 // ============================================================
 function loadProblem(index) {
-    console.log('Loading problem:', index);
-    
     if (filteredProblems.length === 0) {
         problemTitle.textContent = 'No problems found';
         problemDesc.textContent = 'Try adjusting your filter.';
         return;
     }
     
-    // Ensure index is within bounds
     if (index < 0) index = 0;
     if (index >= filteredProblems.length) index = filteredProblems.length - 1;
     
     const p = filteredProblems[index];
-    console.log('Problem loaded:', p.title);
     
-    // Update title and description
     problemTitle.textContent = p.title;
     problemDesc.textContent = p.description;
 
-    // Update difficulty badge
     const diffMap = { 'beginner':'Beginner', 'intermediate':'Intermediate', 'advanced':'Advanced', 'expert':'Expert' };
     problemDifficulty.innerHTML = `<i class="fas fa-circle"></i> ${diffMap[p.difficulty] || p.difficulty}`;
     problemDifficulty.className = 'badge';
@@ -797,10 +1149,8 @@ function loadProblem(index) {
         problemDifficulty.classList.add('difficulty-hard');
     }
 
-    // Update category
     problemCategory.innerHTML = `<i class="fas fa-tag"></i> ${p.category}`;
     
-    // Update stats
     const currentIndex = index + 1;
     const total = filteredProblems.length;
     progressStat.innerHTML = `<i class="fas fa-check-circle"></i> Problem ${currentIndex} of ${total}`;
@@ -809,16 +1159,93 @@ function loadProblem(index) {
     currentPage.textContent = currentIndex;
     totalPages.textContent = total;
     
-    // Update progress
     const progress = (index / total) * 100;
     updateProgress(progress);
 }
 
 // ============================================================
-// 7. FILTER FUNCTION
+// 7. SHOW SOLUTION MODAL - BEAUTIFUL UI
+// ============================================================
+function showSolution() {
+    if (filteredProblems.length === 0) return;
+    
+    const p = filteredProblems[currentProblem % filteredProblems.length];
+    
+    // Set modal content
+    modalTitle.textContent = p.title;
+    modalDescription.textContent = p.description;
+    modalHint.textContent = p.hint || 'Think about the problem carefully.';
+    
+    // Format solution code with syntax highlighting classes
+    let solutionCode = p.solution || '# Solution not available';
+    // Add basic syntax highlighting classes
+    solutionCode = solutionCode
+        .replace(/(def|class|return|if|else|elif|for|while|import|from|try|except|finally|with|as|lambda|yield|async|await)/g, '<span class="code-keyword">$1</span>')
+        .replace(/(".*?"|'.*?')/g, '<span class="code-string">$1</span>')
+        .replace(/(#.*)$/gm, '<span class="code-comment">$1</span>')
+        .replace(/\b(print|len|range|sum|max|min|sorted|reversed|enumerate|zip|map|filter|reduce|open|type|isinstance|issubclass|super|property|staticmethod|classmethod)\b/g, '<span class="code-function">$1</span>');
+    
+    modalSolution.innerHTML = `<code>${solutionCode}</code>`;
+    modalExplanation.textContent = p.explanation || 'Understanding the solution approach.';
+    
+    // Set difficulty
+    const diffMap = { 'beginner':'Beginner', 'intermediate':'Intermediate', 'advanced':'Advanced', 'expert':'Expert' };
+    const diffLabel = diffMap[p.difficulty] || p.difficulty;
+    modalDifficulty.textContent = diffLabel;
+    modalDifficulty.className = 'modal-difficulty';
+    if (p.difficulty === 'beginner' || p.difficulty === 'easy') {
+        modalDifficulty.classList.add('easy');
+    } else if (p.difficulty === 'intermediate' || p.difficulty === 'medium') {
+        modalDifficulty.classList.add('medium');
+    } else {
+        modalDifficulty.classList.add('hard');
+    }
+    
+    // Show modal
+    solutionOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// ============================================================
+// 8. CLOSE SOLUTION MODAL
+// ============================================================
+function closeSolution() {
+    solutionOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ============================================================
+// 9. COPY CODE FUNCTION
+// ============================================================
+function copySolutionCode() {
+    const codeElement = modalSolution.querySelector('code');
+    if (codeElement) {
+        const text = codeElement.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            copyBtn.classList.add('copied');
+            setTimeout(() => {
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                copyBtn.classList.remove('copied');
+            }, 2000);
+        }).catch(() => {
+            // Fallback
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Code copied to clipboard!');
+        });
+    }
+}
+
+// ============================================================
+// 10. FILTER FUNCTION
 // ============================================================
 function applyFilter(filter) {
-    console.log('Applying filter:', filter);
     currentFilter = filter;
     
     if (filter === 'all') {
@@ -830,51 +1257,47 @@ function applyFilter(filter) {
     currentProblem = 0;
     loadProblem(0);
     
-    // Update filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.filter === filter);
     });
 }
 
 // ============================================================
-// 8. EVENT LISTENERS
+// 11. EVENT LISTENERS
 // ============================================================
 
 // Filter buttons
 document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        console.log('Filter clicked:', this.dataset.filter);
+    btn.addEventListener('click', function() {
         applyFilter(this.dataset.filter);
     });
 });
 
+// View Solution button
+document.getElementById('btn-done').addEventListener('click', showSolution);
+
 // Next button
-document.getElementById('btn-next').addEventListener('click', function(e) {
-    console.log('Next button clicked');
+document.getElementById('btn-next').addEventListener('click', function() {
     if (filteredProblems.length === 0) return;
     currentProblem = (currentProblem + 1) % filteredProblems.length;
     loadProblem(currentProblem);
 });
 
-// Next page button
-document.getElementById('btn-next-page').addEventListener('click', function(e) {
-    console.log('Next page button clicked');
+document.getElementById('btn-next-page').addEventListener('click', function() {
     if (filteredProblems.length === 0) return;
     currentProblem = (currentProblem + 1) % filteredProblems.length;
     loadProblem(currentProblem);
 });
 
 // Previous button
-document.getElementById('btn-prev').addEventListener('click', function(e) {
-    console.log('Previous button clicked');
+document.getElementById('btn-prev').addEventListener('click', function() {
     if (filteredProblems.length === 0) return;
     currentProblem = (currentProblem - 1 + filteredProblems.length) % filteredProblems.length;
     loadProblem(currentProblem);
 });
 
 // Jump button
-document.getElementById('btn-jump').addEventListener('click', function(e) {
-    console.log('Jump button clicked');
+document.getElementById('btn-jump').addEventListener('click', function() {
     const input = document.getElementById('problemJump');
     const num = parseInt(input.value);
     if (!isNaN(num) && num >= 1 && num <= filteredProblems.length) {
@@ -886,25 +1309,54 @@ document.getElementById('btn-jump').addEventListener('click', function(e) {
     }
 });
 
-// Enter key on jump input
 document.getElementById('problemJump').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
         document.getElementById('btn-jump').click();
     }
 });
 
-// Done button - Show Solution
-document.getElementById('btn-done').addEventListener('click', function(e) {
-    console.log('Done button clicked');
+// Modal close buttons
+document.getElementById('modalClose').addEventListener('click', closeSolution);
+document.getElementById('modalCloseBtn').addEventListener('click', closeSolution);
+
+// Modal next button
+document.getElementById('modalNextBtn').addEventListener('click', function() {
+    closeSolution();
     if (filteredProblems.length === 0) return;
-    const p = filteredProblems[currentProblem % filteredProblems.length];
-    alert(`🎯 ${p.title}\n\n📝 ${p.description}\n\n💡 Hint: ${p.hint}\n\n✅ Solution:\n${p.solution}\n\n📖 Explanation: ${p.explanation}`);
+    currentProblem = (currentProblem + 1) % filteredProblems.length;
+    loadProblem(currentProblem);
+    setTimeout(showSolution, 300);
 });
 
+// Close modal on overlay click
+solutionOverlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeSolution();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && solutionOverlay.classList.contains('active')) {
+        closeSolution();
+    }
+});
+
+// Copy button
+document.getElementById('copyBtn').addEventListener('click', copySolutionCode);
+
 // ============================================================
-// 9. KEYBOARD SHORTCUTS
+// 12. KEYBOARD SHORTCUTS
 // ============================================================
 document.addEventListener('keydown', function(e) {
+    if (solutionOverlay.classList.contains('active')) {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            document.getElementById('modalNextBtn').click();
+        }
+        return;
+    }
+    
     if (e.key === 'ArrowRight' || e.key === ' ') { 
         e.preventDefault(); 
         document.getElementById('btn-next').click(); 
@@ -919,7 +1371,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ============================================================
-// 10. SMOOTH SCROLL
+// 13. SMOOTH SCROLL
 // ============================================================
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function(e) {
@@ -930,15 +1382,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // ============================================================
-// 11. INITIALIZE EVERYTHING
+// 14. INITIALIZE EVERYTHING
 // ============================================================
 updateCounts();
 loadProblem(0);
 
 console.log(`%c🐍 PythonTutr - 500+ Problems Loaded!`, 'font-size:24px; font-weight:bold; color:#4f46e5;');
 console.log(`%c📚 Total Problems: ${problems.length}`, 'font-size:16px; color:#475569;');
-console.log(`%c📊 Topics: ${[...new Set(problems.map(p => p.category))].slice(0,10).join(', ')}...`, 'font-size:14px; color:#64748b;');
-console.log(`%c🎯 Ready to learn! Use Arrow Keys to navigate.`, 'font-size:14px; color:#7c3aed;');
+console.log(`%c🎯 Click "View Solution" for beautiful code display!`, 'font-size:14px; color:#7c3aed;');
 </script>
 </body>
 </html>
