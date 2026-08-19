@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PythonTutr · 500+ Python Problems</title>
-    <script src="problems.js"></script>
+    
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -683,11 +683,31 @@ function generateAllProblems() {
     return problems;
 }
 
-// Generate problems
+// ============================================================
+// INITIALIZE
+// ============================================================
 const problems = generateAllProblems();
+let filteredProblems = [...problems];
+let currentFilter = 'all';
+let currentProblem = 0;
 
 // ============================================================
-// 2. INTRO SCREEN
+// DOM ELEMENTS
+// ============================================================
+const problemTitle = document.getElementById('problem-title');
+const problemDesc = document.getElementById('problem-desc');
+const problemDifficulty = document.getElementById('problem-difficulty');
+const problemCategory = document.getElementById('problem-category');
+const progressStat = document.getElementById('progress-stat');
+const currentNum = document.getElementById('currentNum');
+const totalNum = document.getElementById('totalNum');
+const currentPage = document.getElementById('currentPage');
+const totalPages = document.getElementById('totalPages');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+
+// ============================================================
+// 1. INTRO SCREEN HIDE
 // ============================================================
 setTimeout(() => {
     const intro = document.getElementById('intro-screen');
@@ -695,7 +715,7 @@ setTimeout(() => {
 }, 4200);
 
 // ============================================================
-// 3. NAVBAR SCROLL EFFECT
+// 2. NAVBAR SCROLL EFFECT
 // ============================================================
 window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
@@ -704,7 +724,7 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================================
-// 4. ROADMAP NODE CLICK
+// 3. ROADMAP NODE CLICK
 // ============================================================
 document.querySelectorAll('.roadmap-node').forEach(node => {
     node.addEventListener('click', function() {
@@ -722,113 +742,139 @@ document.querySelectorAll('.roadmap-node').forEach(node => {
 });
 
 // ============================================================
-// 5. PROGRESS BAR
+// 4. PROGRESS BAR
 // ============================================================
 function updateProgress(percent) {
-    const fill = document.getElementById('progressFill');
-    const text = document.getElementById('progressText');
-    if (fill && text) {
-        fill.style.width = Math.min(percent, 100) + '%';
-        text.textContent = Math.round(Math.min(percent, 100)) + '%';
+    if (progressFill && progressText) {
+        progressFill.style.width = Math.min(percent, 100) + '%';
+        progressText.textContent = Math.round(Math.min(percent, 100)) + '%';
     }
 }
 
 // ============================================================
-// 6. UPDATE UI WITH COUNTS
+// 5. UPDATE UI WITH COUNTS
 // ============================================================
-document.addEventListener('DOMContentLoaded', function() {
+function updateCounts() {
     const total = problems.length;
     document.getElementById('statProblems').textContent = total + '+';
     document.getElementById('heroProblemCount').textContent = total + '+';
     document.getElementById('totalProblemsDisplay').textContent = total + '+';
-    document.getElementById('totalNum').textContent = total;
-    document.getElementById('totalPages').textContent = total;
-});
+}
 
 // ============================================================
-// 7. PRACTICE LOGIC
+// 6. LOAD PROBLEM - MAIN FUNCTION
 // ============================================================
-let filteredProblems = [...problems];
-let currentFilter = 'all';
-let currentProblem = 0;
-
 function loadProblem(index) {
+    console.log('Loading problem:', index);
+    
     if (filteredProblems.length === 0) {
-        document.getElementById('problem-title').textContent = 'No problems found';
-        document.getElementById('problem-desc').textContent = 'Try adjusting your filter.';
+        problemTitle.textContent = 'No problems found';
+        problemDesc.textContent = 'Try adjusting your filter.';
         return;
     }
     
-    const p = filteredProblems[index % filteredProblems.length];
-    document.getElementById('problem-title').textContent = p.title;
-    document.getElementById('problem-desc').textContent = p.description;
-
-    const diffBadge = document.getElementById('problem-difficulty');
-    const diffMap = { 'beginner':'Beginner', 'intermediate':'Intermediate', 'advanced':'Advanced', 'expert':'Expert' };
-    diffBadge.innerHTML = `<i class="fas fa-circle"></i> ${diffMap[p.difficulty] || p.difficulty}`;
-    diffBadge.className = 'badge';
-    diffBadge.classList.remove('difficulty-easy','difficulty-medium','difficulty-hard');
-    if (p.difficulty === 'beginner' || p.difficulty === 'easy') diffBadge.classList.add('difficulty-easy');
-    else if (p.difficulty === 'intermediate' || p.difficulty === 'medium') diffBadge.classList.add('difficulty-medium');
-    else diffBadge.classList.add('difficulty-hard');
-
-    document.getElementById('problem-category').innerHTML = `<i class="fas fa-tag"></i> ${p.category}`;
-    document.getElementById('progress-stat').innerHTML = `<i class="fas fa-check-circle"></i> Problem ${index + 1} of ${filteredProblems.length}`;
-    document.getElementById('currentNum').textContent = index + 1;
-    document.getElementById('totalNum').textContent = filteredProblems.length;
-    document.getElementById('currentPage').textContent = index + 1;
-    document.getElementById('totalPages').textContent = filteredProblems.length;
+    // Ensure index is within bounds
+    if (index < 0) index = 0;
+    if (index >= filteredProblems.length) index = filteredProblems.length - 1;
     
-    const progress = (index / filteredProblems.length) * 100;
+    const p = filteredProblems[index];
+    console.log('Problem loaded:', p.title);
+    
+    // Update title and description
+    problemTitle.textContent = p.title;
+    problemDesc.textContent = p.description;
+
+    // Update difficulty badge
+    const diffMap = { 'beginner':'Beginner', 'intermediate':'Intermediate', 'advanced':'Advanced', 'expert':'Expert' };
+    problemDifficulty.innerHTML = `<i class="fas fa-circle"></i> ${diffMap[p.difficulty] || p.difficulty}`;
+    problemDifficulty.className = 'badge';
+    problemDifficulty.classList.remove('difficulty-easy','difficulty-medium','difficulty-hard');
+    if (p.difficulty === 'beginner' || p.difficulty === 'easy') {
+        problemDifficulty.classList.add('difficulty-easy');
+    } else if (p.difficulty === 'intermediate' || p.difficulty === 'medium') {
+        problemDifficulty.classList.add('difficulty-medium');
+    } else {
+        problemDifficulty.classList.add('difficulty-hard');
+    }
+
+    // Update category
+    problemCategory.innerHTML = `<i class="fas fa-tag"></i> ${p.category}`;
+    
+    // Update stats
+    const currentIndex = index + 1;
+    const total = filteredProblems.length;
+    progressStat.innerHTML = `<i class="fas fa-check-circle"></i> Problem ${currentIndex} of ${total}`;
+    currentNum.textContent = currentIndex;
+    totalNum.textContent = total;
+    currentPage.textContent = currentIndex;
+    totalPages.textContent = total;
+    
+    // Update progress
+    const progress = (index / total) * 100;
     updateProgress(progress);
 }
 
+// ============================================================
+// 7. FILTER FUNCTION
+// ============================================================
 function applyFilter(filter) {
+    console.log('Applying filter:', filter);
     currentFilter = filter;
+    
     if (filter === 'all') {
         filteredProblems = [...problems];
     } else {
         filteredProblems = problems.filter(p => p.difficulty === filter);
     }
+    
     currentProblem = 0;
     loadProblem(0);
     
+    // Update filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.filter === filter);
     });
 }
 
+// ============================================================
+// 8. EVENT LISTENERS
+// ============================================================
+
 // Filter buttons
 document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        applyFilter(btn.dataset.filter);
+    btn.addEventListener('click', function(e) {
+        console.log('Filter clicked:', this.dataset.filter);
+        applyFilter(this.dataset.filter);
     });
 });
 
-// Load first problem
-loadProblem(0);
-
-// Navigation
-document.getElementById('btn-next').addEventListener('click', () => {
+// Next button
+document.getElementById('btn-next').addEventListener('click', function(e) {
+    console.log('Next button clicked');
     if (filteredProblems.length === 0) return;
     currentProblem = (currentProblem + 1) % filteredProblems.length;
     loadProblem(currentProblem);
 });
 
-document.getElementById('btn-next-page').addEventListener('click', () => {
+// Next page button
+document.getElementById('btn-next-page').addEventListener('click', function(e) {
+    console.log('Next page button clicked');
     if (filteredProblems.length === 0) return;
     currentProblem = (currentProblem + 1) % filteredProblems.length;
     loadProblem(currentProblem);
 });
 
-document.getElementById('btn-prev').addEventListener('click', () => {
+// Previous button
+document.getElementById('btn-prev').addEventListener('click', function(e) {
+    console.log('Previous button clicked');
     if (filteredProblems.length === 0) return;
     currentProblem = (currentProblem - 1 + filteredProblems.length) % filteredProblems.length;
     loadProblem(currentProblem);
 });
 
-// Jump to problem
-document.getElementById('btn-jump').addEventListener('click', () => {
+// Jump button
+document.getElementById('btn-jump').addEventListener('click', function(e) {
+    console.log('Jump button clicked');
     const input = document.getElementById('problemJump');
     const num = parseInt(input.value);
     if (!isNaN(num) && num >= 1 && num <= filteredProblems.length) {
@@ -840,38 +886,40 @@ document.getElementById('btn-jump').addEventListener('click', () => {
     }
 });
 
-document.getElementById('problemJump').addEventListener('keydown', (e) => {
+// Enter key on jump input
+document.getElementById('problemJump').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
         document.getElementById('btn-jump').click();
     }
 });
 
 // Done button - Show Solution
-document.getElementById('btn-done').addEventListener('click', () => {
+document.getElementById('btn-done').addEventListener('click', function(e) {
+    console.log('Done button clicked');
     if (filteredProblems.length === 0) return;
     const p = filteredProblems[currentProblem % filteredProblems.length];
     alert(`🎯 ${p.title}\n\n📝 ${p.description}\n\n💡 Hint: ${p.hint}\n\n✅ Solution:\n${p.solution}\n\n📖 Explanation: ${p.explanation}`);
 });
 
 // ============================================================
-// 8. KEYBOARD SHORTCUTS
+// 9. KEYBOARD SHORTCUTS
 // ============================================================
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === ' ') { 
         e.preventDefault(); 
-        document.getElementById('btn-next')?.click(); 
+        document.getElementById('btn-next').click(); 
     }
     if (e.key === 'ArrowLeft') { 
         e.preventDefault(); 
-        document.getElementById('btn-prev')?.click(); 
+        document.getElementById('btn-prev').click(); 
     }
     if (e.key === 'Enter') { 
-        document.getElementById('btn-done')?.click(); 
+        document.getElementById('btn-done').click(); 
     }
 });
 
 // ============================================================
-// 9. SMOOTH SCROLL
+// 10. SMOOTH SCROLL
 // ============================================================
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function(e) {
@@ -882,8 +930,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // ============================================================
-// 10. CONSOLE WELCOME
+// 11. INITIALIZE EVERYTHING
 // ============================================================
+updateCounts();
+loadProblem(0);
+
 console.log(`%c🐍 PythonTutr - 500+ Problems Loaded!`, 'font-size:24px; font-weight:bold; color:#4f46e5;');
 console.log(`%c📚 Total Problems: ${problems.length}`, 'font-size:16px; color:#475569;');
 console.log(`%c📊 Topics: ${[...new Set(problems.map(p => p.category))].slice(0,10).join(', ')}...`, 'font-size:14px; color:#64748b;');
